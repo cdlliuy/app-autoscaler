@@ -1,0 +1,9 @@
+{
+  "apps_domain": "bosh-lite.com",
+  "api": "api.bosh-lite.com",
+  "admin_user": "admin",
+  "admin_password": "admin",
+  "skip_ssl_validation": true,
+
+  "service_name" : "CF-AutoScaler"
+}
