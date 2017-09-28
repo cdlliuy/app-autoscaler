@@ -1,7 +1,7 @@
 {
   "generator-openapi-repo": {
     "importExistingSpec": true,
-    "importedSpec": "/Users/liuying/Bluemix/dev/git-openautoscaler/cdlliuy/app-autoscaler/api/api.swagger.json",
+    "importedSpec": "api.swagger.json",
     "name": "yingtest",
     "repo": "cdlliuy/app-autoscaler",
     "splitSpec": true,
