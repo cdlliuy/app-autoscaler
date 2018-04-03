@@ -73,6 +73,10 @@ describe('Validate Policy JSON Schema structure', function () {
       .put('/v2/schedules/fakeID')
       .query({ 'guid': /.*/ })
       .reply(200);
+
+    nock(schedulerURI)
+      .delete('/v2/schedules/fakeID')
+      .reply(200);
   });
 
   context('policy schema & attribute', function () {

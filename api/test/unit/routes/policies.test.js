@@ -118,6 +118,7 @@ describe('Routing Policy Creation', function() {
     context("when binding info exists", function() {
       beforeEach(function() {
         mockBroker200WithBinding(1);
+        mockSchedulerDelete(1, 200);
         mockSchedulerPut(1, 200);
       });
       it('should create a policy for app id 12345', function(done) {
@@ -154,6 +155,7 @@ describe('Routing Policy Creation', function() {
     context("CSP", function() {
       beforeEach(function() {
         mockBroker200WithBinding(1);
+        mockSchedulerDelete(1, 200);
         mockSchedulerPut(1, 200);
       });
       it('dummy call to test CSP response headers', function(done) {
@@ -177,6 +179,7 @@ describe('Routing Policy Creation', function() {
     context("when there is validation error in scheduler", function() {
       beforeEach(function() {
         mockBroker200WithBinding(1);
+        mockSchedulerDelete(1, 200);
         mockSchedulerPutMessage(1, 400,'Specific Date Schedule start_date_time should be after current date');
       });
       it('should fail to create a policy for app id 12346', function(done) {
@@ -198,6 +201,7 @@ describe('Routing Policy Creation', function() {
           'message': 'Failed to create schedules due to an internal error in scheduler',
         };
         mockBroker200WithBinding(1);
+        mockSchedulerDelete(1, 200);
         mockSchedulerPutError(1, mockError)
       });
       it('should fail to create a policy for app id 12347', function(done) {
@@ -218,6 +222,7 @@ describe('Routing Policy Creation', function() {
   context("update policy", function() {
     beforeEach(function(done) {
       mockBroker200WithBinding(1);
+      mockSchedulerDelete(1, 200);
       mockSchedulerPut(1, 200);
       request(publicApp)
         .put('/v1/apps/12345/policy')
@@ -229,6 +234,7 @@ describe('Routing Policy Creation', function() {
     context("when binding info exists", function() {
       beforeEach(function() {
         mockBroker200WithBinding(1);
+        mockSchedulerDelete(1, 200);
         mockSchedulerPut(1, 204);
       });
       it('should update the existing policy for app id 12345', function(done) {
@@ -246,6 +252,7 @@ describe('Routing Policy Creation', function() {
     context("when binding info does not exist", function() {
       beforeEach(function() {
         mockBroker200WithoutBinding(1);
+        mockSchedulerDelete(1, 200);
         mockSchedulerPut(1, 204);
       });
       it('should return 403', function(done) {
@@ -266,6 +273,7 @@ describe('Routing Policy Creation', function() {
 
     beforeEach(function(done) {
       mockBroker200WithBinding(1);
+      mockSchedulerDelete(1, 200);
       mockSchedulerPut(1, 200);
       request(publicApp)
         .put('/v1/apps/12345/policy')
@@ -295,6 +303,7 @@ describe('Routing Policy Creation', function() {
     context("when binding info does not exist", function() {
       beforeEach(function() {
         mockBroker200WithoutBinding(1);
+        mockSchedulerDelete(1, 200);
         mockSchedulerPut(1, 200);
       });
       it('should return 403', function(done) {
@@ -354,6 +363,7 @@ describe('Routing Policy Creation', function() {
     context('when policy exists', function() {
       beforeEach(function(done) {
         mockBroker200WithBinding(1);
+        mockSchedulerDelete(1, 200);
         mockSchedulerPut(1, 200);
         request(publicApp)
           .put('/v1/apps/12345/policy')

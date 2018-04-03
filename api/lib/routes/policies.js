@@ -15,7 +15,9 @@ module.exports = function(settings, models){
     logger.info('Policy creation request received',{ 'app id': req.params.app_id });
     req.query.policy_guid = uuidV4();
     logger.info('Policy guid ' + req.query.policy_guid);
-    async.waterfall([async.apply(schedulerUtil.createOrUpdateSchedule, req),
+    async.waterfall([
+      async.apply(schedulerUtil.deleteSchedules, req),
+      async.apply(schedulerUtil.createOrUpdateSchedule, req),
       async.apply(policyHelper.createOrUpdatePolicy, req)],
       function(error, result) {
         var responseBody = {};
