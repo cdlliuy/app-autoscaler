@@ -48,17 +48,17 @@ script:
   # Unit test
   - pushd api
   - npm install
-  - npm test
+  #- npm test
   - popd
   - pushd servicebroker
   - npm install
-  - npm test
+  #- npm test
   - popd
   - pushd src/autoscaler
-  - ginkgo -r -race -randomizeAllSpecs
+  #- ginkgo -r -race -randomizeAllSpecs
   - popd
   - pushd scheduler
-  - mvn test
+  #- mvn test
   - popd
   # Integration test
   - pushd api

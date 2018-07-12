@@ -13,7 +13,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("Integration_Metricscollector_Eventgenerator_Scalingengine", func() {
+var _ = FDescribe("Integration_Metricscollector_Eventgenerator_Scalingengine", func() {
 
 	var (
 		testAppId         string

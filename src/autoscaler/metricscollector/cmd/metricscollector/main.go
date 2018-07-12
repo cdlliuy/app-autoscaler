@@ -110,7 +110,8 @@ func main() {
 
 		close(ready)
 
-		<-signals
+		c := <-signals
+		logger.Info("stopping collector with signal", lager.Data{"os.Signal": c})
 		mc.Stop()
 
 		return nil
