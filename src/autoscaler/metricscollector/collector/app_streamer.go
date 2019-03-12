@@ -56,6 +56,7 @@ func (as *appStreamer) Stop() {
 }
 
 func (as *appStreamer) streamMetrics() {
+	as.noaaConsumer.SetIdleTimeout（5 * time.Minute)
 	eventChan, errorChan := as.noaaConsumer.Stream(as.appId, cf.TokenTypeBearer+" "+as.cfc.GetTokens().AccessToken)
 	ticker := as.sclock.NewTicker(as.collectInterval)
 	defer ticker.Stop()
