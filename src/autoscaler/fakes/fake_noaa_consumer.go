@@ -4,6 +4,7 @@ package fakes
 import (
 	"autoscaler/metricscollector/noaa"
 	"sync"
+	"time"
 
 	"github.com/cloudfoundry/sonde-go/events"
 )
@@ -36,6 +37,11 @@ type FakeNoaaConsumer struct {
 	streamReturnsOnCall map[int]struct {
 		result1 <-chan *events.Envelope
 		result2 <-chan error
+	}
+	SetIdleTimeoutStub        func(idleTimeout time.Duration)
+	setIdleTimeoutMutex       sync.RWMutex
+	setIdleTimeoutArgsForCall []struct {
+		idleTimeout time.Duration
 	}
 	CloseStub        func() error
 	closeMutex       sync.RWMutex
@@ -154,6 +160,30 @@ func (fake *FakeNoaaConsumer) StreamReturnsOnCall(i int, result1 <-chan *events.
 	}{result1, result2}
 }
 
+func (fake *FakeNoaaConsumer) SetIdleTimeout(idleTimeout time.Duration) {
+	fake.setIdleTimeoutMutex.Lock()
+	fake.setIdleTimeoutArgsForCall = append(fake.setIdleTimeoutArgsForCall, struct {
+		idleTimeout time.Duration
+	}{idleTimeout})
+	fake.recordInvocation("SetIdleTimeout", []interface{}{idleTimeout})
+	fake.setIdleTimeoutMutex.Unlock()
+	if fake.SetIdleTimeoutStub != nil {
+		fake.SetIdleTimeoutStub(idleTimeout)
+	}
+}
+
+func (fake *FakeNoaaConsumer) SetIdleTimeoutCallCount() int {
+	fake.setIdleTimeoutMutex.RLock()
+	defer fake.setIdleTimeoutMutex.RUnlock()
+	return len(fake.setIdleTimeoutArgsForCall)
+}
+
+func (fake *FakeNoaaConsumer) SetIdleTimeoutArgsForCall(i int) time.Duration {
+	fake.setIdleTimeoutMutex.RLock()
+	defer fake.setIdleTimeoutMutex.RUnlock()
+	return fake.setIdleTimeoutArgsForCall[i].idleTimeout
+}
+
 func (fake *FakeNoaaConsumer) Close() error {
 	fake.closeMutex.Lock()
 	ret, specificReturn := fake.closeReturnsOnCall[len(fake.closeArgsForCall)]
@@ -201,6 +231,8 @@ func (fake *FakeNoaaConsumer) Invocations() map[string][][]interface{} {
 	defer fake.containerEnvelopesMutex.RUnlock()
 	fake.streamMutex.RLock()
 	defer fake.streamMutex.RUnlock()
+	fake.setIdleTimeoutMutex.RLock()
+	defer fake.setIdleTimeoutMutex.RUnlock()
 	fake.closeMutex.RLock()
 	defer fake.closeMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
